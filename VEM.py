@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 """
-Menubar icon for vim emulation
-(https://github.com/rcmdnk/KE-complex_modifications/)
+Vim Emulation (https://github.com/rcmdnk/KE-complex_modifications/)
+Menu bar icon
 
-requirement: rumps (https://github.com/jaredks/rumps),
+Requirement: rumps (https://github.com/jaredks/rumps),
 Worked with python 2.7.16 or later
 """
 
@@ -24,11 +24,12 @@ __version__ = 'v0.1.0'
 __date__ = '28/Jul/2020'
 __maintainer__ = 'rcmdnk'
 __email__ = 'rcmdnk@gmail.com'
+__url__ = 'https://github.com/rcmdnk/VEM'
 __status__ = 'Prototype'
 
 DEBUG = True
-SETTING_FILE = os.environ['HOME'] + '/.config/vim_emu_menu/config'
-PLIST_FILE = os.environ['HOME'] + '/Library/LaunchAgents/vim_emu_menu.plist'
+SETTING_FILE = os.environ['HOME'] + '/.config/vem/config'
+PLIST_FILE = os.environ['HOME'] + '/Library/LaunchAgents/vem.plist'
 CHECK_INTERVAL = 1
 KARABINER_JSON = '/Library/Application Support/org.pqrs/tmp/' \
     'karabiner_grabber_manipulator_environment.json'
@@ -42,13 +43,14 @@ ICON_SET_GRAY = {'normal': 'images/normal_gray.png',
                  'search': 'images/search_gray.png',
                  'disabled': 'images/disabled_gray.png'}
 ABOUT_TITLE = __prog__
-ABOUT_MESSAGE = 'Menubar icon for vim emulation:\n' \
-    + 'https://github.com/rcmdnk/KE-complex_modifications/.\n' \
+ABOUT_MESSAGE = 'Vim Emulation Menu bar icon\n\n' \
+    + 'This application work with  Vim Emulation using Karabiner-Elements:\n' \
+    + 'https://github.com/rcmdnk/KE-complex_modifications/\n\n' \
     + 'Version %s\n' % __version__ \
     + '%s' % __copyright__
 
 
-class VimEmuMenu(rumps.App):
+class VEM(rumps.App):
     def __init__(self, autostart=True, debug=False):
         # Set default values
         self.debug_mode = DEBUG
@@ -66,8 +68,8 @@ class VimEmuMenu(rumps.App):
         self.read_settings()
 
         # Application setup
-        super(VimEmuMenu, self).__init__(type(self).__name__, title=None,
-                                         icon=self.icons['insert'])
+        super(VEM, self).__init__(type(self).__name__, title=None,
+                                  icon=self.icons['insert'])
         self.menu = [
             'About',
             None,
@@ -146,7 +148,7 @@ class VimEmuMenu(rumps.App):
 <plist version="1.0">
 <dict>
         <key>Label</key>
-        <string>vim_emu_menu</string>
+        <string>vem</string>
         <key>ProgramArguments</key>
         <array>
             <string>''' + self.get_exe() + '''</string>
@@ -163,7 +165,7 @@ class VimEmuMenu(rumps.App):
 
     @rumps.clicked('Uninstall')
     def uninstall(self, sender):
-        ret = rumps.alert('Do you want to uninstall VimEmuMenu?',
+        ret = rumps.alert('Do you want to uninstall VEM?',
                           ok='OK', cancel='Cancel')
         if ret == 1:
             self.remove_me()
@@ -234,7 +236,7 @@ class VimEmuMenu(rumps.App):
                                    self.setting_file))
         os.system('rm -rf "%s/%s"' %
                   (os.environ['HOME'],
-                   '/Library/Application Support/VimEmuMenu'))
+                   '/Library/Application Support/VEM'))
 
     def remove_me(self):
         self.reset()
@@ -270,7 +272,7 @@ if __name__ == '__main__':
                         dest='commandline',
                         default=False, help='Check mails once in command line')
     args = parser.parse_args()
-    app = VimEmuMenu(not (args.uninstall or args.reset or args.commandline))
+    app = VEM(not (args.uninstall or args.reset or args.commandline))
     if args.uninstall:
         app.remove_me()
     elif args.reset:

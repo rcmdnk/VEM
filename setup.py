@@ -7,7 +7,7 @@ Usage:
 
 from setuptools import setup
 
-APP = ['VimEmuMenu.py']
+APP = ['VEM.py']
 DATA_FILES = ['images']
 OPTIONS = {
     'argv_emulation': True,
