@@ -28,8 +28,29 @@ With [Homebrew Cask](http://caskroom.io/), do:
 
     $ brew cask install rcmdnk/rcmdnkcask/vem
 
-Or download the app from 
+Or download the app from
 [releases](https://github.com/rcmdnk/VEM/releases) and install it in **/Applications** or **~/Applications**.
+
+The first time you launch VEM, you might see the alert like:
+
+    "VEM" cannot be opened because the developer cannot be verified
+
+Then, click `Cancel` and open **System Preferences**, go to **Security & Privacy**, **General** tab.
+
+You will see
+
+    "VEM" was blocked from use because it is not from an identified developer.
+
+Click `Open Anyway` button in the right of the message.
+
+Then you will see the alert like:
+
+    macOS cannot verify the developer of "VEM". Are you sure you wan to open it?
+
+Now you have `Open` button in the dialog.
+Click `Open` and start VEM.
+
+> [Safely open apps on your Mac - Apple Support](https://support.apple.com/en-us/HT202491)
 
 # Uninstall
 
