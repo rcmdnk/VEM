@@ -32,9 +32,9 @@ PLIST_FILE = os.environ['HOME'] + '/Library/LaunchAgents/vim_emu_menu.plist'
 CHECK_INTERVAL = 1
 KARABINER_JSON = '/Library/Application Support/org.pqrs/tmp/' \
     'karabiner_grabber_manipulator_environment.json'
-ICON_SET = {'normal': 'images/normal.ico', 'visual': 'images/visual.ico',
-            'insert': 'images/insert.ico', 'command': 'images/command.ico',
-            'disabled': 'images/disabled.ico'}
+ICON_SET = {'normal': 'images/normal.png', 'visual': 'images/visual.png',
+            'insert': 'images/insert.png', 'command': 'images/command.png',
+            'search': 'images/search.png', 'disabled': 'images/disabled.png'}
 
 
 class VimEmuMenu(rumps.App):
