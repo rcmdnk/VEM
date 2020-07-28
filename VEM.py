@@ -247,6 +247,7 @@ class VEM(rumps.App):
             os.system('rm -rf "%s"' % app)
         else:
             print('%s is not in App' % self.get_exe())
+        rumps.quit_application()
 
     def start(self):
         self.timer.start()
