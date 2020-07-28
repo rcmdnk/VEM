@@ -235,8 +235,7 @@ class VEM(rumps.App):
         if os.path.exists(self.plist_file):
             os.system('launchctl unload %s' % self.plist_file)
             os.remove(self.plist_file)
-        os.system('rm -f %s %s' % (self.authentication_file,
-                                   self.setting_file))
+        os.system('rm -f %s' % (self.setting_file))
         os.system('rm -rf "%s/%s"' %
                   (os.environ['HOME'],
                    '/Library/Application Support/VEM'))
