@@ -53,7 +53,7 @@ ABOUT_MESSAGE = 'Vim Emulation Menu bar icon\n\n' \
 class VEM(rumps.App):
     def __init__(self, autostart=True, debug=False):
         # Set default values
-        self.debug_mode = DEBUG
+        self.debug_mode = debug
         rumps.debug_mode(self.debug_mode)
 
         self.setting_file = SETTING_FILE
@@ -266,18 +266,16 @@ if __name__ == '__main__':
     parser.add_argument('-u', '--uninstall', action='store_true',
                         dest='uninstall',
                         default=False, help='Uninstall %s' % __prog__)
+    parser.add_argument('-d', '--debug', action='store_true',
+                        dest='debug',
+                        default=False, help='Show debug output')
     parser.add_argument('-r', '--reset', action='store_true', dest='reset',
                         default=False, help='Reset settings')
-    parser.add_argument('-c', '--commandline', action='store_true',
-                        dest='commandline',
-                        default=False, help='Check mails once in command line')
     args = parser.parse_args()
-    app = VEM(not (args.uninstall or args.reset or args.commandline))
+    app = VEM(not (args.uninstall or args.reset), debug=args.debug)
     if args.uninstall:
         app.remove_me()
     elif args.reset:
         app.reset()
-    elif args.commandline:
-        app.get_messages(True)
     else:
         app.run()
