@@ -61,3 +61,7 @@ Launch VEM.app.
     * Then, **VEM.app** will appear in **./dist** directory.
 
 
+# Icons
+
+* Menu bar icons were created with; [CMAN](https://sozai.cman.jp/icon/string/alphabet1/)
+* Application icon was created with; [hatchful](https://hatchful.shopify.com/ja/)

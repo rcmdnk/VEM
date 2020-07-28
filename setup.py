@@ -11,6 +11,7 @@ APP = ['VEM.py']
 DATA_FILES = ['images']
 OPTIONS = {
     'argv_emulation': True,
+    'iconfile': 'VEM.icns',
     'plist': {
         'LSUIElement': True,
     },
