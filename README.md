@@ -1,8 +1,27 @@
 # VEM
+
+
+![VEM](https://github.com/rcmdnk/VEM/raw/master/pics/VEM.png "VEM")
+
 Vim Emulation Menubar icon.
 
 This application work with [Vim Emulation](https://github.com/rcmdnk/KE-complex_modifications/)
 using [Karabiner-Elements](https://karabiner-elements.pqrs.org/).
+
+If you run Karabiner-Elements and Vim Emulation is enabled,
+VEM' icon indicates the current mode of Vim Emulation.
+
+* Insert Mode:
+
+![insert](https://github.com/rcmdnk/VEM/raw/master/pics/menubar_insert.jpg "insert")
+
+* Normal Mode:
+
+![normal](https://github.com/rcmdnk/VEM/raw/master/pics/menubar_normal.jpg "normal")
+
+* If you check `Gray icon` option, all icons will be gray icons.
+
+![insert gray](https://github.com/rcmdnk/VEM/raw/master/pics/menubar_insert_gray.jpg "insert gray")
 
 # Installation
 With [Homebrew Cask](http://caskroom.io/), do:
