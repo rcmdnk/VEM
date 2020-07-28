@@ -187,6 +187,9 @@ class VEM(rumps.App):
             self.icon = self.icons['visual']
         elif kara['variables']['vim_emu_command'] == 1:
             self.icon = self.icons['command']
+        elif kara['variables']['vim_emu_search'] == 1 \
+                or kara['variables']['vim_emu_search_input'] == 1:
+            self.icon = self.icons['search']
         else:
             self.icon = self.icons['normal']
 
