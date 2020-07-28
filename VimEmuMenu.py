@@ -35,10 +35,21 @@ KARABINER_JSON = '/Library/Application Support/org.pqrs/tmp/' \
 ICON_SET = {'normal': 'images/normal.png', 'visual': 'images/visual.png',
             'insert': 'images/insert.png', 'command': 'images/command.png',
             'search': 'images/search.png', 'disabled': 'images/disabled.png'}
+ICON_SET_GRAY = {'normal': 'images/normal_gray.png',
+                 'visual': 'images/visual_gray.png',
+                 'insert': 'images/insert_gray.png',
+                 'command': 'images/command_gray.png',
+                 'search': 'images/search_gray.png',
+                 'disabled': 'images/disabled_gray.png'}
+ABOUT_TITLE = __prog__
+ABOUT_MESSAGE = 'Menubar icon for vim emulation:\n' \
+    + 'https://github.com/rcmdnk/KE-complex_modifications/.\n' \
+    + 'Version %s\n' % __version__ \
+    + '%s' % __copyright__
 
 
 class VimEmuMenu(rumps.App):
-    def __init__(self, autostart=True):
+    def __init__(self, autostart=True, debug=False):
         # Set default values
         self.debug_mode = DEBUG
         rumps.debug_mode(self.debug_mode)
@@ -47,6 +58,8 @@ class VimEmuMenu(rumps.App):
         self.plist_file = PLIST_FILE
         self.karabiner_json = KARABINER_JSON
         self.icon_set = ICON_SET
+        self.icon_set_gray = ICON_SET_GRAY
+        self.icons = self.icon_set
 
         # Read settings
         self.settings = {}
@@ -54,11 +67,11 @@ class VimEmuMenu(rumps.App):
 
         # Application setup
         super(VimEmuMenu, self).__init__(type(self).__name__, title=None,
-                                         icon=self.icon_set['insert'])
+                                         icon=self.icons['insert'])
         self.menu = [
             'About',
             None,
-            'Status',
+            'Gray icon',
             None,
             'Set check interval',
             'Start at login',
@@ -68,10 +81,16 @@ class VimEmuMenu(rumps.App):
         ]
 
         # Other class variables
-        self.status = ''
 
-        if 'startatlogin' in self.settings\
-                and self.settings['startatlogin'] == '1':
+        if 'gray_icon' in self.settings and self.settings['gray_icon'] == '1':
+            self.icons = self.icon_set_gray
+            self.menu['Gray icon'].state = True
+        else:
+            self.icons = self.icon_set
+            self.menu['Gray icon'].state = False
+
+        if 'start_at_login' in self.settings\
+                and self.settings['start_at_login'] == '1':
             self.menu['Start at login'].state = True
         else:
             self.menu['Start at login'].state = False
@@ -86,11 +105,7 @@ class VimEmuMenu(rumps.App):
 
     @rumps.clicked('About')
     def about(self, sender):
-        rumps.alert(title='%s' % __prog__,
-                    message='Menubar icon for vim emulation:\n'
-                    + 'https://github.com/rcmdnk/KE-complex_modifications/.\n'
-                    + 'Version %s\n' % __version__
-                    + '%s' % __copyright__)
+        rumps.alert(title=ABOUT_TITLE, message=ABOUT_MESSAGE)
 
     @rumps.clicked('Set check interval')
     def set_interval(self, sender):
@@ -106,6 +121,16 @@ class VimEmuMenu(rumps.App):
             self.write_settings()
 
         self.start()
+
+    @rumps.clicked('Gray icon')
+    def gray_icon(self, sender):
+        sender.state = not sender.state
+        if sender.state == 0:
+            self.icons = self.icon_set
+        else:
+            self.icons = self.icon_set_gray
+        self.settings['gray_icon'] = str(sender.state)
+        self.write_settings()
 
     @rumps.clicked('Start at login')
     def set_startup(self, sender):
@@ -133,7 +158,7 @@ class VimEmuMenu(rumps.App):
             with open(self.plist_file, 'w') as f:
                 f.write(plist)
 
-        self.settings['startatlogin'] = str(sender.state)
+        self.settings['start_at_login'] = str(sender.state)
         self.write_settings()
 
     @rumps.clicked('Uninstall')
@@ -145,23 +170,23 @@ class VimEmuMenu(rumps.App):
 
     def check_karabiner(self, sender):
         if not os.path.exists(self.karabiner_json):
-            self.icon = self.icon_set['disabled']
+            self.icon = self.icons['disabled']
             return
         with open(self.karabiner_json) as f:
             kara = json.load(f)
         if 'variables' not in kara \
                 or 'vim_emu_normal' not in kara['variables']:
-            self.icon = self.icon_set['disabled']
+            self.icon = self.icons['disabled']
             return
         if kara['variables']['vim_emu_insert'] == 1:
-            self.icon = self.icon_set['insert']
+            self.icon = self.icons['insert']
         elif kara['variables']['vim_emu_visual'] == 1 \
                 or kara['variables']['vim_emu_visual_line'] == 1:
-            self.icon = self.icon_set['visual']
+            self.icon = self.icons['visual']
         elif kara['variables']['vim_emu_command'] == 1:
-            self.icon = self.icon_set['command']
+            self.icon = self.icons['command']
         else:
-            self.icon = self.icon_set['normal']
+            self.icon = self.icons['normal']
 
     def read_settings(self):
         if not os.path.exists(self.setting_file):
