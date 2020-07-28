@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Vim Emulation (https://github.com/rcmdnk/KE-complex_modifications/)
+Vim Emulation (https://rcmdnk.com/KE-complex_modifications/)
 Menu bar icon
 
 Requirement: rumps (https://github.com/jaredks/rumps),
@@ -45,7 +45,7 @@ ICON_SET_GRAY = {'normal': 'images/normal_gray.png',
 ABOUT_TITLE = __prog__
 ABOUT_MESSAGE = 'Vim Emulation Menu bar icon\n\n' \
     + 'This application work with  Vim Emulation using Karabiner-Elements:\n' \
-    + 'https://github.com/rcmdnk/KE-complex_modifications/\n\n' \
+    + 'https://rcmdnk.com/KE-complex_modifications/\n\n' \
     + 'Version %s\n' % __version__ \
     + '%s' % __copyright__
 
