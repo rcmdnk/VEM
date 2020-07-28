@@ -1,0 +1,49 @@
+on:
+  push:
+    tags:
+      - 'v*'
+
+name: Create Release
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.x
+          architecture: x64
+      - name: rumps
+        run: pip install rumps
+      - name: build
+        run: rm -rf build dist && python setup.py py2app
+      - name: get tag
+        id: get_tag
+        run: echo ::set-output name=tag::${GITHUB_REF##*/}
+      - name: zip
+        working-directory: ./dist
+        run: zip -r VEM-${{steps.get_tag.outputs.tag}}.zip VEM.app
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          tag_name: ${{github.ref}}
+          release_name: Release ${{github.ref}}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: ./dist/VEM-${{steps.get_tag.outputs.tag}}.zip
+          asset_name: VEM-${{steps.get_tag.outputs.tag}}.zip
+          asset_content_type: application/zip
