@@ -1,0 +1,5 @@
+[env]
+_.python.venv = ".venv"
+
+[settings]
+experimental = true
