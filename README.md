@@ -83,20 +83,39 @@ Launch VEM.app.
 
 # How to build
 
-* Required pip packages:
-    * [rumps](https://github.com/jaredks/rumps)
-    * [py2app](https://pypi.python.org/pypi/py2app/)
+* Required Python
+    * **Python 3.12 installed with [Homebrew](https://brew.sh/) is required.**
 
-            $ pip install rumps py2app
+            $ brew install python@3.12
+
+    * Use the Homebrew Python directly (e.g. `/opt/homebrew/opt/python@3.12/bin/python3.12`).
+    * Python installed via `uv` or `mise` does **not** work. Those are
+      [python-build-standalone](https://github.com/astral-sh/python-build-standalone)
+      builds that statically link the standard library, so `py2app` fails with an error like:
+
+            AttributeError: module 'zlib' has no attribute '__file__'. Did you mean: '__name__'?
+
+      Homebrew's Python is a framework build whose stdlib modules are shared
+      libraries (`.so`), which `py2app` expects.
+
+* Setup
+    * Homebrew's Python does not allow `pip install` directly
+      (`externally-managed-environment`), so create a virtual environment
+      with the Homebrew Python and install the required packages
+      ([rumps](https://github.com/jaredks/rumps) and
+      [py2app](https://pypi.python.org/pypi/py2app/)) into it:
+
+            $ /opt/homebrew/opt/python@3.12/bin/python3.12 -m venv venv
+            $ ./venv/bin/pip install rumps py2app
 
 * Test
     * Run
 
-            $ python VEM.py
+            $ ./venv/bin/python VEM.py
 * Build
     * Run
 
-            $ rm -rf build dist && python setup.py py2app
+            $ rm -rf build dist && ./venv/bin/python setup.py py2app
 
     * Then, **VEM.app** will appear in **./dist** directory.
 
