@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: 3.12
       - name: rumps
-        run: pip install rumps
+        run: pip install rumps py2app
       - name: build
         run: rm -rf build dist && python setup.py py2app
       - name: get tag
